@@ -38,14 +38,22 @@
   <div id="shade" hidden></div>
   <div id="book" hidden>
     <div class="bk">
+      <button type="button" class="bk-tab bk-tab--calc" id="tabc">Calcul</button>
+      <button type="button" class="bk-tab bk-tab--back" id="tabb" hidden>Carnet</button>
+      <div class="spread" id="sp1">
       <div class="bk-page bk-left">
         <h3>Carnet de bord</h3>
         <p class="bk-info" id="bi"></p>
         <svg class="bk-rose" viewBox="-60 -60 120 120" aria-hidden="true"><circle r="44" fill="none"/><circle r="36" fill="none"/>
           <path d="M0-52L6-6 0 0-6-6zM0 52L6 6 0 0-6 6zM52 0L6 6 0 0 6-6zM-52 0L-6 6 0 0-6-6z"/><path d="M26-26L4-4 0 0 4 2zM-26 26L-4 4zM26 26L4 4zM-26-26L-4-4z" opacity=".6"/>
           <text y="-46">N</text><text y="56">S</text><text x="50" y="4">E</text><text x="-50" y="4">O</text></svg>
-        <p class="bk-note">Longitude = 15° × (écart − éq. du temps)</p>
-        <p class="bk-note">Latitude = hauteur du pôle céleste</p>
+        <ol class="bk-steps">
+          <li>Boussole : repère le Nord.</li>
+          <li>Montre : note l’heure de Greenwich.</li>
+          <li>Cadran solaire : note l’heure solaire.</li>
+          <li>Marque-page « Calcul » : trouve la longitude.</li>
+          <li>De nuit, sextant sur l’étoile du pôle : c’est la latitude.</li>
+        </ol>
       </div>
       <div class="bk-page bk-right">
         <h4>Mes relevés</h4>
@@ -56,6 +64,29 @@
         <label>Longitude<span><input id="lo" inputmode="decimal" class="sm"><select id="lw"><option>E<option>O</select></span></label>
         <label>Latitude<span><input id="la" inputmode="decimal" class="sm"><select id="ls"><option>N<option>S</select></span></label>
         <button type="button" id="vf" class="btn-primary" disabled>Vérifier</button>
+      </div>
+      </div>
+      <div class="spread" id="sp2" hidden>
+      <div class="bk-page bk-left">
+        <h3>Calculer la longitude</h3>
+        <ol class="bk-steps">
+          <li><b>Écart</b> = heure solaire − heure de Greenwich.</li>
+          <li><b>Écart corrigé</b> = écart − équation du temps.</li>
+          <li>Convertis l’écart corrigé en <b>heure décimale</b> : les minutes divisées par 60.</li>
+          <li>Multiplie par <b>15</b> : la Terre tourne de 15° par heure.</li>
+          <li>Reporte l’angle dans « Longitude » : <b>E</b> si l’écart est positif, <b>O</b> s’il est négatif.</li>
+        </ol>
+      </div>
+      <div class="bk-page bk-right calc">
+        <h4>Étape 1 · heure décimale</h4>
+        <label>Écart corrigé<span><select id="cs"><option>+<option>−</select><input id="ch" inputmode="numeric" class="xs" placeholder="h">h<input id="cm" inputmode="numeric" class="xs" placeholder="min"></span></label>
+        <p class="cl"><span id="cm2">…</span> min ÷ 60 = <b id="cr1">…</b> h</p>
+        <p class="cl">Heure décimale = <b id="cr2">…</b> h</p>
+        <h4>Étape 2 · angle</h4>
+        <label>Heure décimale<span><input id="cd" inputmode="decimal" class="sm" placeholder="0,00"> × 15</span></label>
+        <p class="cl big">= <b id="cr3">…</b> °</p>
+        <p class="cl note">À reporter dans le carnet, ligne « Longitude ».</p>
+      </div>
       </div>
       <div class="bk-ribbon"></div>
       <div class="bk-clasp"><span></span></div>
@@ -71,7 +102,9 @@
 <section id="res" class="screen-full" hidden>
   <div class="res-card">
     <h2 class="app-title app-title--small">Résultat</h2>
-    <canvas id="gl"></canvas><div id="rt"></div>
+    <div class="gwrap"><canvas id="gl" aria-label="Globe : glisser pour tourner, molette ou pincement pour zoomer"></canvas>
+      <div class="gz"><button type="button" id="gzi" aria-label="Zoomer">+</button><span id="gzv">× 1</span><button type="button" id="gzo" aria-label="Dézoomer">−</button></div></div>
+    <p class="ghint">Glisse pour tourner · molette, pincement ou + / − pour zoomer sur l’écart</p><div id="rt"></div>
     <div class="ex-actions"><button type="button" id="again" class="btn-primary">Nouvelle position</button><button type="button" id="back" class="btn-secondary">Retour</button></div>
   </div>
 </section>
