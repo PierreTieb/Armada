@@ -113,7 +113,7 @@ canvas{display:block;touch-action:none}#c{position:fixed;inset:0;width:100%;heig
 .bk-rose circle{stroke:#5a4128;stroke-width:1.2}.bk-rose path{fill:#5a4128}.bk-rose text{font-family:Georgia,serif;font-size:11px;fill:#5a4128;text-anchor:middle}
 .bk label{position:relative;z-index:1;min-width:0;display:flex;justify-content:space-between;align-items:flex-end;gap:8px;margin:2px 0;font-size:1.35rem;min-height:36px}
 .bk input,.bk select{font-family:var(--font-hand);font-size:1.4rem;font-weight:700;color:#1b2a5c;background:transparent;border:none;border-radius:0;border-bottom:2px dotted rgba(90,60,30,.55);padding:0 2px;width:4.4em;min-width:0;flex:0 0 auto;text-align:center}
-.bk input.sm{width:4.4em}.bk select{width:auto;cursor:pointer;padding:0}
+.bk input.sm{width:4.4em}.bk select{width:2.6em;cursor:pointer;padding:0 2px;text-align:left}
 .bk input:focus,.bk select:focus{outline:none;border-bottom:2px solid #1b2a5c;background:rgba(255,255,255,.35)}
 .bk input::placeholder{color:rgba(90,60,30,.35)}
 .bk label span{display:flex;gap:4px;align-items:flex-end}
@@ -140,12 +140,12 @@ canvas{display:block;touch-action:none}#c{position:fixed;inset:0;width:100%;heig
 .ret line,.ret circle{stroke:rgba(255,238,200,.85);stroke-width:1;vector-effect:non-scaling-stroke;fill:none}
 @keyframes eye{from{transform:scale(.6);opacity:0}}
 #sxp{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(10px + env(safe-area-inset-bottom,0px));width:min(94vw,400px);pointer-events:auto;
-  padding:8px 10px 10px;border-radius:22px;background:linear-gradient(160deg,#f6dc94,#d9a441 60%,#b8862f);box-shadow:0 6px 0 #8a5d12,0 14px 26px rgba(0,0,0,.45),inset 0 2px 0 rgba(255,255,255,.55)}
-.sx-cap{margin:6px 0 0;text-align:center;font-size:.8rem;font-weight:700;color:#4a3208;line-height:1.25}
+  padding:6px 8px 6px;border-radius:22px;background:linear-gradient(160deg,#f6dc94,#d9a441 60%,#b8862f);box-shadow:0 6px 0 #8a5d12,0 14px 26px rgba(0,0,0,.45),inset 0 2px 0 rgba(255,255,255,.55)}
+.sx-cap{font-size:.72rem!important;margin:3px 0 0;text-align:center;font-size:.8rem;font-weight:700;color:#4a3208;line-height:1.25}
 #sxa{display:block;width:100%;height:auto}
 .ticks line{stroke:#2a2118}
 .ticks text{font-family:var(--font-display);font-weight:600;fill:#2a2118;text-anchor:middle}
-#sxa .ticks text{font-size:19px;font-weight:700}
+#sxa .ticks text{font-size:17px;font-weight:700;dominant-baseline:middle}
 .sx-btns{display:flex;gap:6px;margin-top:8px}
 .sx-btns button{flex:1;min-height:40px;border:none;border-radius:999px;cursor:pointer;font-family:var(--font-display);font-weight:600;font-size:1rem;color:#4a3208;
   background:linear-gradient(160deg,#fffaf0,#f4e6c4);box-shadow:0 3px 0 #8a5d12}

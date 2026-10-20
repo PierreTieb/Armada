@@ -27,7 +27,7 @@ const LEATH=STD({map:leatherT,bumpMap:leatherT,bumpScale:.01,roughness:.45,color
   CANV=STD({map:canvasT,bumpMap:canvasT,bumpScale:.015,roughness:1,envMapIntensity:.35});
 
 const mesh=(g,m,x=0,y=0,z=0)=>{const o=new THREE.Mesh(g,m);o.position.set(x,y,z);return o};
-const disc=(t,r)=>new THREE.Mesh(new THREE.CircleGeometry(r,72),STD({map:t,roughness:.55}));
+const disc=(t,r)=>new THREE.Mesh(new THREE.CircleGeometry(r,72),STD({map:t,roughness:.95,color:0xbcb096,envMapIntensity:.25}));
 const CY=(r,h,s=64)=>new THREE.CylinderGeometry(r,r,h,s).rotateX(Math.PI/2),TR=(r,t,a=Math.PI*2)=>new THREE.TorusGeometry(r,t,14,72,a);
 const ease=t=>{t=cl(t);return 1+2.70158*Math.pow(t-1,3)+1.70158*Math.pow(t-1,2)},eio=t=>{t=cl(t);return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2};
 function rbox(w,h,d,r,m){const b=Math.min(r,d/2)*.7,W2=w/2-b,H2=h/2-b,q=Math.max(.001,Math.min(r,W2,H2)),s=new THREE.Shape();
@@ -80,8 +80,8 @@ function watchTex(d){const m=d.getUTCMinutes(),h=d.getUTCHours()%12+m/60;
     for(let i=0;i<60;i++){x.save();x.rotate(i*6*R);x.lineWidth=i%5?2.5:7;x.beginPath();x.moveTo(0,-480);x.lineTo(0,i%5?-450:-430);x.stroke();x.restore()}
     x.font='900 80px Georgia';x.lineWidth=4;x.lineJoin='round';for(let i=1;i<=12;i++){const px=Math.sin(i*Math.PI/6)*355,py=-Math.cos(i*Math.PI/6)*355+4;x.strokeText(RO[i],px,py);x.fillText(RO[i],px,py)}
     x.font='italic 34px Georgia';x.fillText('Greenwich',0,-205);
-    x.fillStyle='#fff';x.fillRect(-90,150,180,62);x.lineWidth=3;x.strokeRect(-90,150,180,62);x.fillStyle='#1f1a14';x.font='bold 40px Georgia';
-    x.fillText(`${d.getUTCDate()}/${d.getUTCMonth()+1} ${d.getUTCHours()<12?'AM':'PM'}`,0,183);
+    x.fillStyle='#fffaf0';x.fillRect(-205,128,410,112);x.lineWidth=6;x.strokeRect(-205,128,410,112);x.fillStyle=x.strokeStyle='#1f1a14';x.font='900 78px Georgia';x.lineWidth=4;
+    const dt=`${d.getUTCDate()}/${d.getUTCMonth()+1} ${d.getUTCHours()<12?'AM':'PM'}`;x.strokeText(dt,0,188);x.fillText(dt,0,188);
     const hand=(a,L,wd,tip)=>{x.save();x.rotate(a);x.fillStyle='#1b2a5c';x.beginPath();x.moveTo(-wd,40);x.lineTo(-wd*.5,-L*.7);x.lineTo(0,-L);x.lineTo(wd*.5,-L*.7);x.lineTo(wd,40);x.fill();
       x.beginPath();x.arc(0,-L*tip,wd*2.2,0,7);x.fill();x.fillStyle='#fbf6e8';x.beginPath();x.arc(0,-L*tip,wd*1.1,0,7);x.fill();x.restore()};
     hand(h*30*R,250,22,.62);hand(m*6*R,400,15,.78);x.fillStyle='#1b2a5c';x.beginPath();x.arc(0,0,26,0,7);x.fill();x.fillStyle='#d9a441';x.beginPath();x.arc(0,0,10,0,7);x.fill()})}
