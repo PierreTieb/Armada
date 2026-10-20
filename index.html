@@ -2,34 +2,80 @@
 <html lang="fr"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Cap sur la Terre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head><body>
 <canvas id="c"></canvas>
-<canvas id="o3d"></canvas>
-<div id="start"><h1>Cap sur la Terre</h1>
-<p>Retrouvez votre position avec une boussole, un sextant, un cadran solaire et une montre réglée sur Greenwich.</p>
-<button id="bt">Tutoriel pas à pas</button><button id="be">Exploration</button></div>
+
+<section id="start" class="screen-full">
+  <div class="start-in">
+    <h1 class="app-title">Cap sur la Terre</h1>
+    <p class="app-subtitle">Retrouve ta position avec une boussole, un sextant, un cadran solaire et une montre réglée sur Greenwich.</p>
+    <p class="mode-caption">Pour apprendre la méthode</p>
+    <button type="button" id="bt" class="mode-btn mode-btn--blue"><span class="mode-btn__title">Tutoriel pas à pas</span><span class="mode-btn__subtitle">Chaque instrument expliqué avec les vraies valeurs</span></button>
+    <p class="mode-caption">Pour te tester</p>
+    <button type="button" id="be" class="mode-btn mode-btn--green"><span class="mode-btn__title">Exploration</span><span class="mode-btn__subtitle">Une position inconnue : à toi de la retrouver</span></button>
+  </div>
+</section>
+
 <div id="ui" hidden>
-<label id="sw" aria-label="Jour ou nuit"><input type="checkbox" id="tg"><i class="d"></i><i class="n"></i></label>
-<div id="tool"></div>
-<div id="tuto" hidden></div>
-<div id="inv" hidden></div>
-<div id="shade" hidden></div>
-<button id="bag" aria-label="Sac">🎒</button>
-<div id="book" hidden><h3>Carnet de bord</h3><p id="bi"></p>
-<label>Heure solaire<input id="f1" placeholder="hh:mm"></label>
-<label>Heure Greenwich<input id="f2" placeholder="hh:mm"></label>
-<label>Écart<input id="f3" placeholder="ex. +3:12"></label>
-<label>Angle du pôle (°)<input id="f4" inputmode="decimal"></label>
-<label>Longitude<span><input id="lo" inputmode="decimal" style="width:62px"> <select id="lw"><option>E<option>O</select></span></label>
-<label>Latitude<span><input id="la" inputmode="decimal" style="width:62px"> <select id="ls"><option>N<option>S</select></span></label>
-<button id="vf" disabled>Vérifier</button></div>
+  <div id="sext" hidden></div>
+  <label id="sw" aria-label="Jour ou nuit"><input type="checkbox" id="tg"><i class="d"></i><i class="n"></i></label>
+  <div id="hint" hidden></div>
+  <button type="button" id="put" class="chip" hidden>Ranger l’objet</button>
+  <div id="tuto" hidden></div>
+  <div id="labels" hidden></div>
+  <button type="button" id="bag" aria-label="Ouvrir le sac"><svg viewBox="0 0 64 64" aria-hidden="true">
+    <path d="M24 15q8-9 16 0" stroke="#4a2810" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <rect x="12" y="15" width="40" height="44" rx="12" fill="#6a7440"/><rect x="7" y="34" width="8" height="18" rx="3" fill="#7a3f1d"/><rect x="49" y="34" width="8" height="18" rx="3" fill="#7a3f1d"/>
+    <rect x="18" y="42" width="28" height="15" rx="5" fill="#8a4a24"/><rect x="18" y="42" width="28" height="6" rx="3" fill="#6b3416"/>
+    <path d="M11 21q0-7 7-7h28q7 0 7 7v12q0 6-6 6H17q-6 0-6-6z" fill="#8a4a24"/>
+    <rect x="17" y="32" width="5" height="12" rx="1.5" fill="#5a2a10"/><rect x="42" y="32" width="5" height="12" rx="1.5" fill="#5a2a10"/>
+    <rect x="16.5" y="38" width="6" height="5" rx="1" fill="none" stroke="#e8b83e" stroke-width="1.6"/><rect x="41.5" y="38" width="6" height="5" rx="1" fill="none" stroke="#e8b83e" stroke-width="1.6"/>
+    <circle cx="32" cy="26" r="6.5" fill="#f2c443" stroke="#a8741c" stroke-width="1.6"/></svg></button>
+  <div id="shade" hidden></div>
+  <div id="book" hidden>
+    <div class="bk">
+      <div class="bk-page bk-left">
+        <h3>Carnet de bord</h3>
+        <p class="bk-info" id="bi"></p>
+        <svg class="bk-rose" viewBox="-60 -60 120 120" aria-hidden="true"><circle r="44" fill="none"/><circle r="36" fill="none"/>
+          <path d="M0-52L6-6 0 0-6-6zM0 52L6 6 0 0-6 6zM52 0L6 6 0 0 6-6zM-52 0L-6 6 0 0-6-6z"/><path d="M26-26L4-4 0 0 4 2zM-26 26L-4 4zM26 26L4 4zM-26-26L-4-4z" opacity=".6"/>
+          <text y="-46">N</text><text y="56">S</text><text x="50" y="4">E</text><text x="-50" y="4">O</text></svg>
+        <p class="bk-note">Longitude = 15° × (écart − éq. du temps)</p>
+        <p class="bk-note">Latitude = hauteur du pôle céleste</p>
+      </div>
+      <div class="bk-page bk-right">
+        <h4>Mes relevés</h4>
+        <label>Heure solaire<input id="f1" placeholder="hh:mm"></label>
+        <label>Heure Greenwich<input id="f2" placeholder="hh:mm"></label>
+        <label>Écart<input id="f3" placeholder="+3:12"></label>
+        <label>Hauteur du pôle<input id="f4" inputmode="decimal" placeholder="°"></label>
+        <label>Longitude<span><input id="lo" inputmode="decimal" class="sm"><select id="lw"><option>E<option>O</select></span></label>
+        <label>Latitude<span><input id="la" inputmode="decimal" class="sm"><select id="ls"><option>N<option>S</select></span></label>
+        <button type="button" id="vf" class="btn-primary" disabled>Vérifier</button>
+      </div>
+      <div class="bk-ribbon"></div>
+      <div class="bk-clasp"><span></span></div>
+      <button type="button" class="bk-x" id="bkx" aria-label="Fermer le carnet">✕</button>
+    </div>
+  </div>
 </div>
-<div id="res" hidden><canvas id="gl"></canvas><div id="rt"></div><div><button id="again">Nouvelle position</button> <button id="back">Retour</button></div></div>
+
+<section id="res" class="screen-full" hidden>
+  <div class="res-card">
+    <h2 class="app-title app-title--small">Résultat</h2>
+    <canvas id="gl"></canvas><div id="rt"></div>
+    <div class="ex-actions"><button type="button" id="again" class="btn-primary">Nouvelle position</button><button type="button" id="back" class="btn-secondary">Retour</button></div>
+  </div>
+</section>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="js/astro.js"></script>
-<script src="js/scene.js"></script>
+<script src="js/world.js"></script>
 <script src="js/objects3d.js"></script>
+<script src="js/sextant.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/tuto.js"></script>
 </body></html>
