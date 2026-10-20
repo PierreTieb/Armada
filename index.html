@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Cap sur la Terre</title>
+<link rel="stylesheet" href="css/style.css">
+</head><body>
+<canvas id="c"></canvas>
+<div id="start"><h1>Cap sur la Terre</h1>
+<p>Retrouvez votre position avec une boussole, un sextant, un cadran solaire et une montre réglée sur Greenwich.</p>
+<button id="bt">Tutoriel pas à pas</button><button id="be">Exploration</button></div>
+<div id="ui" hidden>
+<label id="sw" aria-label="Jour ou nuit"><input type="checkbox" id="tg"><i class="d"></i><i class="n"></i></label>
+<div id="tool"></div>
+<div id="tuto" hidden></div>
+<div id="inv" hidden></div>
+<div id="shade" hidden></div>
+<button id="bag" aria-label="Sac">🎒</button>
+<div id="book" hidden><h3>Carnet de bord</h3><p id="bi"></p>
+<label>Heure solaire<input id="f1" placeholder="hh:mm"></label>
+<label>Heure Greenwich<input id="f2" placeholder="hh:mm"></label>
+<label>Écart<input id="f3" placeholder="ex. +3:12"></label>
+<label>Angle du pôle (°)<input id="f4" inputmode="decimal"></label>
+<label>Longitude<span><input id="lo" inputmode="decimal" style="width:62px"> <select id="lw"><option>E<option>O</select></span></label>
+<label>Latitude<span><input id="la" inputmode="decimal" style="width:62px"> <select id="ls"><option>N<option>S</select></span></label>
+<button id="vf" disabled>Vérifier</button></div>
+</div>
+<div id="res" hidden><canvas id="gl"></canvas><div id="rt"></div><div><button id="again">Nouvelle position</button> <button id="back">Retour</button></div></div>
+<script src="js/astro.js"></script>
+<script src="js/scene.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/tuto.js"></script>
+</body></html>
