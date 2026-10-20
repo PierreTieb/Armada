@@ -4,25 +4,13 @@ const NAMES={comp:'Boussole',watch:'Montre',sext:'Sextant',dial:'Cadran solaire'
 function art(k,size,center){const[x,y,w,h]=ART[k],s=size/Math.max(w,h),cw=w*s,ch=h*s;
   return `width:${cw}px;height:${ch}px;background:url(img/objects.jpg) no-repeat -${x*s}px -${y*s}px/${1408*s}px ${768*s}px;`+(center?`margin:-${ch/2}px 0 0 -${cw/2}px;`:'')}
 
-function mkC(){let s='<svg viewBox="-112 -112 224 224"><circle r="97" fill="#c9971c"/><circle r="86" fill="#f1e6c8"/><g id="cr">';
-  for(let a=0;a<360;a+=10)s+=`<line y1="-86" y2="${a%90?-78:-72}" stroke="#2a2118" stroke-width="${a%30?1:2}" transform="rotate(${a})"/>`;
-  [['N',0],['E',90],['S',180],['O',270]].forEach(([t,a])=>s+=`<text y="-56" text-anchor="middle" font-size="18" font-family="serif" font-weight="700" fill="${t=='N'?'#b3261e':'#2a2118'}" transform="rotate(${a})">${t}</text>`);
-  return s+'<path d="M0-48L7 0L-7 0Z" fill="#c0392b"/><path d="M0 48L7 0L-7 0Z" fill="#3b6ea8"/></g><circle r="5" fill="#c9971c"/><path d="M0-99l-7-12h14z" fill="#c0392b"/></svg>'}
-function mkW(){const d=new Date((sc[night?'night':'day']-2440587.5)*864e5),m=d.getUTCMinutes(),h=d.getUTCHours()%12+m/60;
-  let s='<div class="lid"></div><svg viewBox="-112 -112 224 224"><circle r="97" fill="#c9971c"/><circle r="86" fill="#f6efdb"/>';
-  for(let i=1;i<=12;i++)s+=`<text x="${Math.sin(i*Math.PI/6)*66}" y="${-Math.cos(i*Math.PI/6)*66+5}" text-anchor="middle" font-size="14" font-family="serif" fill="#2a2118">${RO[i]}</text>`;
-  for(let i=0;i<60;i++)s+=`<line y1="-84" y2="${i%5?-80:-76}" stroke="#2a2118" transform="rotate(${i*6})"/>`;
-  return s+`<rect x="-26" y="24" width="52" height="16" rx="3" fill="#fff" stroke="#2a2118"/><text y="36" text-anchor="middle" font-size="11" fill="#2a2118">${d.getUTCDate()}/${d.getUTCMonth()+1} ${d.getUTCHours()<12?'AM':'PM'}</text><line y2="-42" stroke="#2a2118" stroke-width="5" stroke-linecap="round" transform="rotate(${h*30})"/><line y2="-68" stroke="#2a2118" stroke-width="3" stroke-linecap="round" transform="rotate(${m*6})"/><circle r="5" fill="#c9971c"/></svg>`}
-const mkS=()=>'<div class="sx"><div id="ro">0.0°</div><input type="range" id="sx" min="0" max="90" step="0.1" value="0"><small>Faites glisser le curseur ou l’écran : centrez l’astre dans le réticule et lisez l’angle.</small></div>';
-
 function setTool(k){
-  tool=k;const t=$('tool');
-  t.innerHTML=k?`<div class="art" style="${art(k,k=='sext'?230:200,1)}"></div><div class="real">${k=='comp'?mkC():k=='watch'?mkW():k=='sext'?mkS():'<small class="hint">Cadran posé au sol, orienté vers le pôle le plus proche.</small>'}</div>`:'';
-  fovT=k=='sext'?45:k=='dial'?85:75;
+  tool=k;O3.hold(k=='comp'||k=='watch'||k=='sext'?k:null);O3.dial(k=='dial');
+  fovT=k=='sext'?22:k=='dial'?60:75;
   if(k=='dial'){dc=[2.9*Math.sin(yaw*R),2.9*Math.cos(yaw*R)];tp=-32}
   if(k=='sext'&&pit<8)tp=25;
+  $('tool').innerHTML=k=='dial'?'<small class="hint">Molette ou pincement pour zoomer. XII est tourné vers le pôle le plus proche.</small>':k=='sext'?'<small class="hint">Glissez pour viser. Molette de souris : réglage fin de l’angle.</small>':'';
   $('inv').hidden=true;
-  const sx=$('sx');if(sx)sx.oninput=()=>{pit=+sx.value;tp=null};
 }
 function setNight(n){night=n;$('tg').checked=!!n;if(tool=='watch')setTool('watch')}
 function bk(open){$('book').hidden=!open;$('shade').hidden=!open;if(open)$('inv').hidden=true}
@@ -35,10 +23,14 @@ $('shade').onclick=()=>bk(0);
 $('tg').onchange=e=>setNight(e.target.checked?1:0);
 
 /* regard à 360° */
-let dr=null;
-cv.onpointerdown=e=>{dr=[e.clientX,e.clientY];cv.setPointerCapture(e.pointerId);$('inv').hidden=true};
-cv.onpointermove=e=>{if(!dr)return;const f=fov/75*.2;yaw=((yaw-(e.clientX-dr[0])*f)%360+360)%360;pit=Math.max(tool=='sext'?0:-85,Math.min(90,pit+(e.clientY-dr[1])*f));dr=[e.clientX,e.clientY];tp=null};
-cv.onpointerup=()=>dr=null;
+const P=new Map(),pdist=()=>{const a=[...P.values()];return Math.hypot(a[0][0]-a[1][0],a[0][1]-a[1][1])},zoom=m=>{fovT=Math.max(20,Math.min(95,fovT*m))};
+let pd=0;
+cv.onpointerdown=e=>{P.set(e.pointerId,[e.clientX,e.clientY]);cv.setPointerCapture(e.pointerId);$('inv').hidden=true;if(P.size==2)pd=pdist()};
+cv.onpointermove=e=>{const o=P.get(e.pointerId);if(!o)return;
+  if(P.size==2){P.set(e.pointerId,[e.clientX,e.clientY]);const d=pdist();if(tool!='sext')zoom(pd/d);pd=d;return}
+  const f=fov/75*.2;yaw=((yaw-(e.clientX-o[0])*f)%360+360)%360;pit=Math.max(tool=='sext'?0:-85,Math.min(90,pit+(e.clientY-o[1])*f));P.set(e.pointerId,[e.clientX,e.clientY]);tp=null};
+cv.onpointerup=cv.onpointercancel=e=>P.delete(e.pointerId);
+cv.addEventListener('wheel',e=>{e.preventDefault();if(tool=='sext'){pit=Math.max(0,Math.min(90,pit-Math.sign(e.deltaY)*.1));tp=null}else zoom(1+e.deltaY*.001)},{passive:false});
 
 /* démarrage */
 function launch(){gen();$('start').hidden=true;$('ui').hidden=false;if(!run){run=1;frame()}}
