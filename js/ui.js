@@ -16,9 +16,9 @@ $('bag').onclick=()=>{if(!$('book').hidden)bk(0);if(O3.bag&&O3.bDir>0)O3.bagClos
 $('shade').onclick=$('bkx').onclick=()=>bk(0);
 
 /* double page « Calcul » : les pages tournent pour l'atteindre */
-function calcPage(on){if(on==!$('sp2').hidden)return;const b=document.querySelector('.bk');
+function calcPage(on){if(on==!$('sp2').classList.contains('off'))return;const b=document.querySelector('.bk');
   for(let i=0;i<3;i++){const l=document.createElement('div');l.className='leaf '+(on?'fwd':'bwd');l.style.animationDelay=i*.11+'s';b.appendChild(l);setTimeout(()=>l.remove(),820+i*110)}
-  setTimeout(()=>{$('sp1').hidden=on;$('sp2').hidden=!on;$('tabc').hidden=on;$('tabb').hidden=!on},360)}
+  setTimeout(()=>{[['sp1',on],['sp2',!on]].forEach(([i,off])=>{$(i).classList.toggle('off',off);$(i).setAttribute('aria-hidden',off)});$('tabc').hidden=on;$('tabb').hidden=!on},360)}
 $('tabc').onclick=()=>calcPage(true);$('tabb').onclick=()=>calcPage(false);
 const num=v=>parseFloat(String(v).replace(',','.').replace('−','-')),fr=x=>(Math.round(x*100)/100).toFixed(2).replace('.',',');
 function calc(){const sg=$('cs').value=='+'?1:-1,h=num($('ch').value),m=num($('cm').value),d=num($('cd').value);
