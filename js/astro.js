@@ -62,9 +62,13 @@ const MW=(()=>{const a=[],g=()=>{let s=0;for(let i=0;i<4;i++)s+=Math.random();re
   for(let i=0;i<9000;i++){const l=Math.random()*2*Math.PI,core=Math.pow(Math.cos((l-0)/2),2),b=g()*(4+5*core)*R,v=[Math.cos(b)*Math.cos(l),Math.cos(b)*Math.sin(l),Math.sin(b)],e=GAL.map(r=>r[0]*v[0]+r[1]*v[1]+r[2]*v[2]);
     a.push([Math.atan2(e[1],e[0])/R,Math.asin(e[2])/R,(.35+.65*core)*(.5+Math.random()*.5)])}return a})();
 
+/* biome cohérent avec les coordonnées : mer hors des terres, désert en Afrique (et Arabie), herbe ailleurs */
+function onLand(la,lo){let c=0;for(const r of LAND)for(let i=0,j=r.length-2;i<r.length;j=i,i+=2){const xi=r[i],yi=r[i+1],xj=r[j],yj=r[j+1];if((yi>la)!=(yj>la)&&lo<(xj-xi)*(la-yi)/(yj-yi)+xi)c^=1}return!!c}
+const bioAt=(la,lo)=>!onLand(la,lo)?'sea':lo>-18&&lo<56&&la>-36&&la<37&&!(la>31&&lo>26)?'desert':'grass';
 function gen(){
-  const sg=Math.random()<.5?-1:1;lat=sg*(10+Math.random()*45);lon=Math.random()*360-180;
-  biome=['desert','grass','sea'][Math.floor(Math.random()*3)];
+  const want=['desert','grass','sea'][Math.floor(Math.random()*3)];
+  for(let k=0;k<5000;k++){const sg=Math.random()<.5?-1:1;lat=sg*(10+Math.random()*45);lon=Math.random()*360-180;if(bioAt(lat,lon)==want)break}
+  biome=bioAt(lat,lon);
   const d0=Date.UTC(2026,0,1,12)+Math.floor(Math.random()*365)*864e5;
   const mk=t=>{let j=jdOf(d0);for(let i=0;i<4;i++)j+=(((t-solT(j,lon))%24+36)%24-12)/24;return j};
   const sa=j=>{const s=sun(j);return Math.asin(dir(s.ra,s.dec,lst(j,lon),lat)[2])/R};

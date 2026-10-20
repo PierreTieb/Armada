@@ -194,4 +194,4 @@ function draw(){
   O3.render(sd,k);
   Sext.upd();
 }
-function frame(){if(!run)return;if(tp!=null){pit+=(tp-pit)*.08;if(Math.abs(tp-pit)<.05){pit=tp;tp=null}}fov+=(fovT-fov)*.1;vy+=((tool=='sext'?H*.36:H/2)-vy)*.12;draw();requestAnimationFrame(frame)}
+function frame(){if(!run)return;if(tp!=null){pit+=(tp-pit)*.08;if(Math.abs(tp-pit)<.05){pit=tp;tp=null}}fov+=(fovT-fov)*.1;vy+=((tool=='sext'?H*.4:H/2)-vy)*.12;draw();requestAnimationFrame(frame)}

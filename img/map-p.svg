@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1600" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="3" seed="4"/>
+      <feColorMatrix values="0 0 0 0 .45  0 0 0 0 .3  0 0 0 0 .12  0 0 0 .22 0"/>
+      <feComposite in2="SourceGraphic" operator="in"/>
+    </filter>
+    <filter id="blot" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency=".012" numOctaves="4" seed="9"/>
+      <feColorMatrix values="0 0 0 0 .55  0 0 0 0 .36  0 0 0 0 .14  0 0 0 -1.6 1.05"/>
+      <feComposite in2="SourceGraphic" operator="in"/>
+    </filter>
+    <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="14"/></filter>
+    <radialGradient id="vig" cx="50%" cy="50%" r="72%">
+      <stop offset=".55" stop-color="#7a4a1c" stop-opacity="0"/><stop offset=".86" stop-color="#7a4a1c" stop-opacity=".35"/><stop offset="1" stop-color="#4a2a0c" stop-opacity=".75"/>
+    </radialGradient>
+    <radialGradient id="glow" cx="50%" cy="48%" r="45%"><stop offset="0" stop-color="#fff6dc" stop-opacity=".75"/><stop offset="1" stop-color="#fff6dc" stop-opacity="0"/></radialGradient>
+    <pattern id="waves" width="90" height="46" patternUnits="userSpaceOnUse">
+      <path d="M8 24q9-9 18 0t18 0" fill="none" stroke="#6f8c8a" stroke-width="2.2" stroke-linecap="round" opacity=".45"/>
+    </pattern>
+    <g id="mt"><path d="M-22 14L0-18 22 14" fill="#e8cf98" stroke="#6b4420" stroke-width="2.5" stroke-linejoin="round"/><path d="M0-18L-4 2 4 14" fill="none" stroke="#6b4420" stroke-width="1.5"/></g>
+    <g id="palm" stroke="#5a3a18" stroke-width="2.5" fill="none" stroke-linecap="round"><path d="M0 22q4-18 0-34"/><path d="M0-12q-14-8-24 2M0-12q14-8 24 2M0-12q-6-14-18-14M0-12q6-14 18-14"/></g>
+  </defs>
+
+  <rect width="800" height="1600" fill="#efd9a8"/>
+  <rect width="800" height="1600" fill="#c9965a" filter="url(#blot)" opacity=".55"/>
+  <rect width="800" height="1600" fill="url(#glow)"/>
+
+  <!-- quadrillage -->
+  <g stroke="#8a6234" stroke-width="1.2" opacity=".22">
+    <path d="M0 160H800M0 320H800M0 480H800M0 640H800M0 800H800M0 960H800M0 1120H800M0 1280H800M0 1440H800"/>
+    <path d="M160 0V1600M320 0V1600M480 0V1600M640 0V1600"/>
+  </g>
+  <!-- mer -->
+  <rect width="800" height="1600" fill="url(#waves)" opacity=".8"/>
+
+  <!-- île à gauche -->
+  <g transform="translate(-60 -170) scale(.85)"><g filter="url(#rough)">
+    <path d="M60 300q60-70 160-50t150 60q60 50 40 140t-90 150q-60 70-150 60T60 560q-50-60-40-140t40-120z" fill="#efd9a8" stroke="#7a4a1c" stroke-width="22" stroke-opacity=".12"/>
+    <path d="M60 300q60-70 160-50t150 60q60 50 40 140t-90 150q-60 70-150 60T60 560q-50-60-40-140t40-120z" fill="#e9cf98" stroke="#6b4420" stroke-width="3.5"/>
+  </g>
+  <use href="#mt" x="170" y="380"/><use href="#mt" x="215" y="400"/><use href="#mt" x="190" y="430"/>
+  <use href="#palm" x="300" y="500"/><use href="#palm" x="120" y="520"/></g>
+
+  <!-- île à droite -->
+  <g transform="translate(-830 760)"><g filter="url(#rough)">
+    <path d="M1250 560q80-60 190-30t130 110q20 90-60 140t-180 40q-90-20-120-100t40-160z" fill="#efd9a8" stroke="#7a4a1c" stroke-width="22" stroke-opacity=".12"/>
+    <path d="M1250 560q80-60 190-30t130 110q20 90-60 140t-180 40q-90-20-120-100t40-160z" fill="#e9cf98" stroke="#6b4420" stroke-width="3.5"/>
+    <path d="M1330 160q50-40 120-20t60 70q-10 50-80 50t-110-40q-20-30 10-60z" fill="#e9cf98" stroke="#6b4420" stroke-width="3.5"/>
+  </g>
+  <use href="#palm" x="1300" y="660"/><use href="#mt" x="1420" y="620"/><use href="#mt" x="1460" y="645"/><use href="#palm" x="1420" y="200"/></g>
+
+  <!-- chemin vers le trésor -->
+  <path d="M200 280C420 380 120 700 380 900S700 1250 500 1460" fill="none" stroke="#a3361c" stroke-width="5" stroke-dasharray="4 16" stroke-linecap="round" opacity=".85"/>
+  <g transform="translate(530 1472)" stroke="#a3361c" stroke-width="9" stroke-linecap="round"><path d="M-20-20L20 20M20-20L-20 20"/></g>
+
+  <!-- rose des vents -->
+  <g transform="translate(130 1450)" fill="#5a3a18" stroke="#5a3a18">
+    <circle r="70" fill="none" stroke-width="2.5"/><circle r="58" fill="none" stroke-width="1.2"/>
+    <path d="M0-92L10-10 0 0-10-10zM0 92L10 10 0 0-10 10zM92 0L10 10 0 0 10-10zM-92 0L-10 10 0 0-10-10z" stroke-width="1"/>
+    <path d="M0-92L10-10 0 0z M0 92L-10 10 0 0z M92 0L10 10 0 0z M-92 0L-10-10 0 0z" fill="#efd9a8" stroke-width="1"/>
+    <path d="M44-44L6-6 4 2zM-44 44L-6 6zM44 44L6 6zM-44-44L-6-6z" opacity=".55"/>
+    <text y="-100" font-family="Georgia,serif" font-size="30" font-weight="bold" text-anchor="middle" stroke="none" fill="#a3361c">N</text>
+  </g>
+  <!-- navire -->
+  <g transform="translate(640 200)" fill="none" stroke="#5a3a18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".8">
+    <path d="M-50 20h100l-18 22h-64z" fill="#e3c48a"/><path d="M0 20V-50M-28 20V-26"/>
+    <path d="M2-46q34 14 0 54zM-26-22q22 10 0 34z" fill="#f4e6c4"/>
+  </g>
+
+  <rect width="800" height="1600" fill="#000" filter="url(#grain)"/>
+  <rect width="800" height="1600" fill="url(#vig)"/>
+</svg>
