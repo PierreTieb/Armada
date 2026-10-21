@@ -8,6 +8,16 @@
 </head><body>
 <canvas id="c"></canvas>
 
+<div id="land" hidden role="dialog" aria-modal="true" aria-labelledby="landt">
+  <div class="land-in">
+    <svg class="land-ico" viewBox="0 0 64 64" aria-hidden="true"><rect x="22" y="8" width="20" height="36" rx="4" fill="none" stroke="currentColor" stroke-width="3"/>
+      <rect x="10" y="30" width="36" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="3" opacity=".55" transform="rotate(-8 28 40)"/>
+      <path d="M50 20a14 14 0 0 1 2 14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M48 33l4 3 3-4" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <p id="landt">Pour mieux jouer, tourne ton appareil en mode paysage.</p>
+    <button type="button" id="landok">Continuer</button>
+  </div>
+</div>
+
 <section id="start" class="screen-full">
   <div class="start-in">
     <h1 class="app-title">Cap sur la Terre</h1>

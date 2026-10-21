@@ -182,4 +182,13 @@ canvas{display:block;touch-action:none}#c{position:fixed;inset:0;width:100%;heig
 #rt p{margin:4px 0;font-weight:700}#rt .gap{font-family:var(--font-display);font-size:1.5rem;margin-top:10px}
 .dot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:8px;vertical-align:-1px}.dot.g{background:var(--success)}.dot.r{background:var(--error)}
 @media(max-aspect-ratio:4/5){.screen-full{background-image:url(../img/map-p.svg)}}
+/* conseil « mode paysage » */
+#land{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:24px;background:rgba(8,10,18,.78);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);animation:fadein .4s ease-out}
+.land-in{max-width:300px;text-align:center;color:#f4ead6}
+.land-ico{width:72px;height:72px;color:#f4ead6;animation:tilt 2.4s ease-in-out infinite}
+@keyframes tilt{0%,30%{transform:rotate(0)}55%,85%{transform:rotate(-90deg)}100%{transform:rotate(0)}}
+@keyframes fadein{from{opacity:0}}
+.land-in p{font-size:1.05rem;font-weight:700;line-height:1.4;margin:14px 0 20px}
+#landok{border:1.5px solid rgba(244,234,214,.6);background:transparent;color:#f4ead6;font-weight:800;font-size:1rem;border-radius:999px;padding:10px 26px;cursor:pointer}
+#landok:active{background:rgba(244,234,214,.12)}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01s!important;transition-duration:.01s!important}}

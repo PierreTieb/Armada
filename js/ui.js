@@ -46,6 +46,12 @@ $('quit').onclick=()=>{$('qm').hidden=false;$('qno').focus()};
 $('qno').onclick=()=>$('qm').hidden=true;
 $('qyes').onclick=()=>{$('qm').hidden=true;setTool(null);bk(0);O3.reset();tmode=0;$('tuto').hidden=true;$('res').hidden=true;$('ui').hidden=true;$('start').hidden=false;run=0};
 
+/* conseil au lancement : jouer en mode paysage (smartphone tenu en portrait uniquement) */
+const portrait=()=>innerHeight>innerWidth,phone=matchMedia('(pointer: coarse)').matches&&Math.min(screen.width,screen.height)<600;
+if(phone&&portrait())$('land').hidden=false;
+$('landok').onclick=$('land').onclick=e=>{if(e.target==$('land')||e.target==$('landok'))$('land').hidden=true};
+addEventListener('resize',()=>{if(!portrait())$('land').hidden=true});
+
 /* démarrage */
 function launch(){gen();$('start').hidden=true;$('ui').hidden=false;if(!run){run=1;frame()}}
 $('be').onclick=()=>{tmode=0;$('tuto').hidden=true;launch()};
