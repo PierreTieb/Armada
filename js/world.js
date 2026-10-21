@@ -194,4 +194,10 @@ function draw(){
   O3.render(sd,k);
   Sext.upd();
 }
-function frame(){if(!run)return;if(tp!=null){pit+=(tp-pit)*.08;if(Math.abs(tp-pit)<.05){pit=tp;tp=null}}fov+=(fovT-fov)*.1;vy+=((tool=='sext'?H*.42:H/2)-vy)*.12;draw();requestAnimationFrame(frame)}
+/* si la carte graphique est réinitialisée (Windows le fait quand elle sature), on recharge textures et éclairage */
+cv.addEventListener('webglcontextlost',e=>e.preventDefault());
+cv.addEventListener('webglcontextrestored',()=>{const seen=new Set();[wS,hS].forEach(s=>s.traverse(o=>{if(!o.material)return;(Array.isArray(o.material)?o.material:[o.material]).forEach(m=>{m.needsUpdate=true;
+  ['map','bumpMap'].forEach(k=>{const t=m[k];if(t&&!seen.has(t)){seen.add(t);t.needsUpdate=true}})})}));makeEnv();World.jd=0});
+/* pas de rendu 3D quand une page plein écran la recouvre (résultat) : la carte graphique se repose */
+const covered=()=>!$('res').hidden;
+function frame(){if(!run)return;if(covered()){requestAnimationFrame(frame);return}if(tp!=null){pit+=(tp-pit)*.08;if(Math.abs(tp-pit)<.05){pit=tp;tp=null}}fov+=(fovT-fov)*.1;vy+=((tool=='sext'?H*.42:H/2)-vy)*.12;draw();requestAnimationFrame(frame)}

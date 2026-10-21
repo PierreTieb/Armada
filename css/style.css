@@ -177,12 +177,7 @@ canvas{display:block;touch-action:none}#c{position:fixed;inset:0;width:100%;heig
 /* ===== Résultat ===== */
 #res{align-items:center}
 .res-card{background:rgba(255,250,238,.94);border:2px solid rgba(122,74,28,.25);border-radius:28px;box-shadow:var(--shadow-card);padding:20px 18px;text-align:center;width:min(100%,520px);margin:auto}
-#gl{display:block;margin:6px auto 4px;max-width:100%;cursor:grab;touch-action:none}
-.gwrap{position:relative;display:inline-block}
-.gz{position:absolute;right:-4px;bottom:10px;display:flex;flex-direction:column;align-items:center;gap:4px}
-.gz button{width:40px;height:40px;border-radius:50%;border:none;cursor:pointer;font-size:1.3rem;font-weight:800;color:#4A280A;background:linear-gradient(160deg,#FCE6C4,#EBB77C);box-shadow:0 3px 0 #B97A3E}
-.gz button:active{transform:translateY(2px);box-shadow:0 1px 0 #B97A3E}
-.gz span{font-size:.8rem;font-weight:800;color:#7a5532}
+#gl{display:block;margin:6px auto 4px;max-width:100%;cursor:grab;touch-action:none;border-radius:18px;background:radial-gradient(circle at 50% 45%,#1b2a4a,#0b1226)}
 .ghint{margin:0 0 8px;font-size:.82rem;color:#7a5532;font-weight:700}
 #rt p{margin:4px 0;font-weight:700}#rt .gap{font-family:var(--font-display);font-size:1.5rem;margin-top:10px}
 .dot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:8px;vertical-align:-1px}.dot.g{background:var(--success)}.dot.r{background:var(--error)}

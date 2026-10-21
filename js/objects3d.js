@@ -3,9 +3,10 @@ const hS=new THREE.Scene(),hC=new THREE.PerspectiveCamera(40,1,.1,60);hC.positio
 const VH=2*6*Math.tan(20*R);
 hS.add(new THREE.HemisphereLight(0xfff4e0,0x3a2a1a,.7));
 const keyL=new THREE.DirectionalLight(0xffffff,1.1),rimL=new THREE.DirectionalLight(0xffe2b0,.6);keyL.position.set(2,4,6);rimL.position.set(-4,2,-3);hS.add(keyL,rimL);
-(()=>{const t=tex(512,256,(x,w,h)=>{const g=x.createLinearGradient(0,0,0,h);g.addColorStop(0,'#fff8e8');g.addColorStop(.42,'#d8c49a');g.addColorStop(.55,'#6b5638');g.addColorStop(1,'#1a120a');
+const envSrc=tex(512,256,(x,w,h)=>{const g=x.createLinearGradient(0,0,0,h);g.addColorStop(0,'#fff8e8');g.addColorStop(.42,'#d8c49a');g.addColorStop(.55,'#6b5638');g.addColorStop(1,'#1a120a');
   x.fillStyle=g;x.fillRect(0,0,w,h);x.fillStyle='#fff';x.fillRect(w*.12,h*.1,w*.14,h*.2);x.fillRect(w*.6,h*.16,w*.07,h*.12);x.fillStyle='rgba(255,240,210,.7)';x.fillRect(w*.35,h*.05,w*.18,h*.08)});
-  t.mapping=THREE.EquirectangularReflectionMapping;hS.environment=new THREE.PMREMGenerator(rd).fromEquirectangular(t).texture})();
+envSrc.mapping=THREE.EquirectangularReflectionMapping;
+const makeEnv=()=>{hS.environment=new THREE.PMREMGenerator(rd).fromEquirectangular(envSrc).texture};makeEnv();
 
 const STD=(o)=>new THREE.MeshStandardMaterial(o);
 const GOLD=STD({color:0xdcaa4a,metalness:1,roughness:.24}),GOLDD=STD({color:0xa9772c,metalness:1,roughness:.38}),
